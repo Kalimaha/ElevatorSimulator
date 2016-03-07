@@ -2,14 +2,14 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <h1>
+                <h2>
                     Elevator Simulator
-                </h1>
+                </h2>
             </div>
             <div class="col-lg-6">
-                <h1 class="pull-right">
-                    Time: 0
-                </h1>
+                <h2 class="pull-right">
+                    Time: <span id="time">0</span>
+                </h2>
             </div>
         </div>
         <hr>
@@ -142,17 +142,17 @@
         <br>
         <div class="row">
             <div class="col-lg-4">
-                <button class="btn btn-success" style="width: 100%;">
+                <button class="btn btn-success" style="width: 100%;" id="start_button">
                     <i class="fa fa-play"></i> Start Simulation
                 </button>
             </div>
             <div class="col-lg-4">
-                <button class="btn btn-warning" style="width: 100%;">
+                <button class="btn btn-warning" style="width: 100%;" id="pause_button">
                     <i class="fa fa-pause"></i> Pause Simulation
                 </button>
             </div>
             <div class="col-lg-4">
-                <button class="btn btn-danger" style="width: 100%;">
+                <button class="btn btn-danger" style="width: 100%;"  id="reset_button">
                     <i class="fa fa-close"></i> Reset Simulation
                 </button>
             </div>

@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, window*/
 define(['jquery',
         'handlebars',
         'text!html/templates.hbs',
@@ -11,7 +11,9 @@ define(['jquery',
         this.CONFIG = {
             placeholder_id: 'placeholder',
             running: false,
-            delay: 3000
+            delay: 2000,
+            time: 0,
+            timer: null
         };
 
     }
@@ -27,7 +29,8 @@ define(['jquery',
             dynamic_data,
             html,
             floors = [],
-            i;
+            i,
+            that = this;
 
         /* Initiate floors. */
         for (i = 10; i > 0; i -= 1) {
@@ -54,24 +57,38 @@ define(['jquery',
         $('#elevator_c_floor_1').html(html);
         $('#elevator_d_floor_1').html(html);
 
-        /* Test API. */
-        $.ajax({
-            url: 'https://api.mlab.com/api/1/databases/elevator-test/collections/elevators/56dd2d4ee4b0c05f88d01ef5',
-            method: 'GET',
-            contentType: 'application/json',
-            data: {
-                apiKey: 'eJFJDDkM-cAmYj06ykd2yO_jtpaz8_or'
-            },
-            success: function (response) {
-                console.log(response);
-            },
-            error: function (a, b, c) {
-                console.log(a);
-                console.log(b);
-                console.log(c);
-            }
+        /* Simulation controllers. */
+        $('#start_button').click(function () {
+            that.start_simulation();
+        });
+        $('#pause_button').click(function () {
+            that.pause_simulation();
+        });
+        $('#reset_button').click(function () {
+            that.reset_simulation();
         });
 
+    };
+
+    APP.prototype.start_simulation = function () {
+        var that = this;
+        this.CONFIG.running = true;
+        this.timer = window.setInterval(function () {
+            that.CONFIG.time = 1 + that.CONFIG.time;
+            $('#time').html(that.CONFIG.time);
+        }, this.CONFIG.delay);
+    };
+
+    APP.prototype.pause_simulation = function () {
+        this.CONFIG.running = false;
+        window.clearInterval(this.timer);
+    };
+
+    APP.prototype.reset_simulation = function () {
+        this.CONFIG.running = false;
+        window.clearInterval(this.timer);
+        this.CONFIG.time = 0;
+        $('#time').html(this.CONFIG.time);
     };
 
     return APP;
