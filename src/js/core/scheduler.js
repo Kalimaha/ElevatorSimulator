@@ -33,12 +33,12 @@ define(['jquery'], function ($) {
     SCHEDULER.prototype.update_time = function () {
         var i,
             new_time = 1 + this.CONFIG.time;
-        if (this.CONFIG.log[new_time] === undefined) {
-            this.CONFIG.log[new_time] = {};
+        if (this.CONFIG.log["t" + new_time] === undefined) {
+            this.CONFIG.log["t" + new_time] = {};
         }
         for (i = 0; i < this.CONFIG.elevators.length; i += 1) {
-            if (this.CONFIG.log[new_time][this.CONFIG.elevators[i]] === undefined) {
-                this.CONFIG.log[new_time][this.CONFIG.elevators[i]] = {
+            if (this.CONFIG.log["t" + new_time][this.CONFIG.elevators[i].id] === undefined) {
+                this.CONFIG.log["t" + new_time][this.CONFIG.elevators[i].id] = {
                     floor: this.CONFIG.elevators[i].floor
                 }
             }
