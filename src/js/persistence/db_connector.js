@@ -20,7 +20,7 @@ define(['jquery', 'q'], function ($, Q) {
 
     DB_CONNECTOR.prototype.get_by_session_and_time = function (environment, session, time) {
         if (environment !== 'test' && environment !== 'production') {
-            throw new Error('Please provide a valid environment ("test" or "production").')
+            throw new Error('Please provide a valid environment ("test" or "production").');
         }
         return Q($.ajax({
             url: this.CONFIG.urls[environment],
@@ -35,7 +35,7 @@ define(['jquery', 'q'], function ($, Q) {
 
     DB_CONNECTOR.prototype.create = function (environment, elevator) {
         if (environment !== 'test' && environment !== 'production') {
-            throw new Error('Please provide a valid environment ("test" or "production").')
+            throw new Error('Please provide a valid environment ("test" or "production").');
         }
         return Q($.ajax({
             url: this.CONFIG.urls[environment],
