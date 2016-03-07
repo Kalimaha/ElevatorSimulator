@@ -52,11 +52,15 @@ define(['scheduler'], function (SCHEDULER) {
                     session: 'alpha'
                 });
                 s.update_time();
-                expect(s.CONFIG.log.length).toEqual(4);
-                expect(s.CONFIG.log[0].time).toEqual(1);
-                expect(s.CONFIG.log[1].time).toEqual(1);
-                expect(s.CONFIG.log[2].time).toEqual(1);
-                expect(s.CONFIG.log[3].time).toEqual(1);
+                expect(s.CONFIG.log[1]).not.toBeUndefined();
+                expect(s.CONFIG.log[1]['A']).not.toBeUndefined();
+                expect(s.CONFIG.log[1]['B']).not.toBeUndefined();
+                expect(s.CONFIG.log[1]['C']).not.toBeUndefined();
+                expect(s.CONFIG.log[1]['D']).not.toBeUndefined();
+                expect(s.CONFIG.log[1]['A'].floor).toEqual(1);
+                expect(s.CONFIG.log[1]['B'].floor).toEqual(1);
+                expect(s.CONFIG.log[1]['C'].floor).toEqual(1);
+                expect(s.CONFIG.log[1]['D'].floor).toEqual(1);
             });
 
         });

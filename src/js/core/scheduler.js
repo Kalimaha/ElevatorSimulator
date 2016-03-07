@@ -36,16 +36,14 @@ define(['jquery'], function ($) {
         if (this.CONFIG.log[new_time] === undefined) {
             this.CONFIG.log[new_time] = {};
         }
-        console.log(this.CONFIG.log);
         for (i = 0; i < this.CONFIG.elevators.length; i += 1) {
             if (this.CONFIG.log[new_time][this.CONFIG.elevators[i]] === undefined) {
                 this.CONFIG.log[new_time][this.CONFIG.elevators[i]] = {
-                    id: this.CONFIG.elevators[i].id
+                    floor: this.CONFIG.elevators[i].floor
                 }
             }
         }
         this.CONFIG.time = new_time;
-        console.log(this.CONFIG.log);
     };
 
     return SCHEDULER;
