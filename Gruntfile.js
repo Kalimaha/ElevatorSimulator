@@ -27,7 +27,8 @@
                                 'jasmine-html': ['../test/js/libs/jasmine-html'],
                                 'jasmine-boot': ['../test/js/libs/boot'],
                                 'scheduler': ['../src/js/core/scheduler'],
-                                'simulator-spec': ['../test/js/spec/SchedulerSpec']
+                                'simulator-spec': ['../test/js/spec/SchedulerSpec'],
+                                'db-connector-spec': ['../test/js/spec/DBConnectorSpec']
                             },
                             shim: {
                                 'jasmine-html': {
