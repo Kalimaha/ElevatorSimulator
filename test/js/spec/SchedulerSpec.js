@@ -18,7 +18,7 @@ define(['scheduler'], function (SCHEDULER) {
             });
 
             it('The simulator should have 4 initial elevators', function () {
-                expect(s.CONFIG.elevators.length).toEqual(0);
+                expect(s.CONFIG.elevators.length).toEqual(4);
             });
 
         });
@@ -33,6 +33,30 @@ define(['scheduler'], function (SCHEDULER) {
                 expect(s.CONFIG.elevators[1].session).toEqual('alpha');
                 expect(s.CONFIG.elevators[2].session).toEqual('alpha');
                 expect(s.CONFIG.elevators[3].session).toEqual('alpha');
+            });
+
+        });
+
+        describe('Update Log', function () {
+
+            it('When the log is updated the time should be increased by 1.', function () {
+                s.init({
+                    session: 'alpha'
+                });
+                s.update_time();
+                expect(s.CONFIG.time).toEqual(1);
+            });
+
+            it('When the time is updated there should be 4 elements in the log.', function () {
+                s.init({
+                    session: 'alpha'
+                });
+                s.update_time();
+                expect(s.CONFIG.log.length).toEqual(4);
+                expect(s.CONFIG.log[0].time).toEqual(1);
+                expect(s.CONFIG.log[1].time).toEqual(1);
+                expect(s.CONFIG.log[2].time).toEqual(1);
+                expect(s.CONFIG.log[3].time).toEqual(1);
             });
 
         });

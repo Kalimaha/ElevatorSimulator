@@ -30,16 +30,17 @@ define(['jquery'], function ($) {
         }
     };
 
-    SCHEDULER.prototype.update_log = function (time) {
-        var i;
+    SCHEDULER.prototype.update_time = function () {
+        var i,
+            new_time = 1 + this.CONFIG.time;
         for (i = 0; i < this.CONFIG.elevators.length; i += 1) {
             if (this.CONFIG.log[this.CONFIG.elevators[i]] === undefined) {
                 this.CONFIG.log[this.CONFIG.elevators[i]] = {
-                    time: time
+                    time: new_time
                 }
             }
         }
-        this.CONFIG.time = time;
+        this.CONFIG.time = new_time;
         console.log(this.CONFIG.log);
     };
 
