@@ -9,7 +9,9 @@ define(['jquery',
     function APP() {
 
         this.CONFIG = {
-            placeholder_id: 'placeholder'
+            placeholder_id: 'placeholder',
+            running: false,
+            delay: 3000
         };
 
     }
@@ -44,10 +46,13 @@ define(['jquery',
         $('#' + this.CONFIG.placeholder_id).html(html);
 
         /* Elevators at ground floor. */
-        $('#elevator_a_floor_1').html('<button class="btn btn-info" style="width: 100%;"><div class="badge">0 -</div></button>');
-        $('#elevator_b_floor_1').html('<button class="btn btn-info" style="width: 100%;"><div class="badge">0 -</div></button>');
-        $('#elevator_c_floor_1').html('<button class="btn btn-info" style="width: 100%;"><div class="badge">0 -</div></button>');
-        $('#elevator_d_floor_1').html('<button class="btn btn-info" style="width: 100%;"><div class="badge">0 -</div></button>');
+        source = $(templates).filter('#elevator_structure').html();
+        template = Handlebars.compile(source);
+        html = template({});
+        $('#elevator_a_floor_1').html(html);
+        $('#elevator_b_floor_1').html(html);
+        $('#elevator_c_floor_1').html(html);
+        $('#elevator_d_floor_1').html(html);
 
         /* Test API. */
         $.ajax({
