@@ -14,15 +14,15 @@ define(['db-connector', 'q'], function (DBCONNECTOR, Q) {
         describe('Configurability', function () {
 
             it('The simulator should have 2 urls', function () {
-                expect(Object.keys(s.CONFIG.urls).length).toEqual(2);
+                expect(Object.keys(c.CONFIG.urls).length).toEqual(2);
             });
 
             it('One for testing...', function () {
-                expect(s.CONFIG.urls.test).not.toBeUndefined();
+                expect(c.CONFIG.urls.test).not.toBeUndefined();
             });
 
             it('...and one for production.', function () {
-                expect(s.CONFIG.urls.production).not.toBeUndefined();
+                expect(c.CONFIG.urls.production).not.toBeUndefined();
             });
 
         });
@@ -33,6 +33,14 @@ define(['db-connector', 'q'], function (DBCONNECTOR, Q) {
                 expect(function () {
                     c.get_by_session_and_time('deploy', 'alpha', 1);
                 }).toThrowError('Please provide a valid environment ("test" or "production").');
+            });
+
+            it('The connector should retrieve data from the DB.', function () {
+                c.get_by_session_and_time('deploy', 'alpha', 1).success(function (response) {
+                    console.log(response);
+                }).fail(function (error) {
+                    console.log(error);
+                });
             });
 
         });
