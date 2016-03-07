@@ -1,0 +1,119 @@
+<script type='text/x-handlebars-template' id='main_structure'>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>
+                    Elevator Simulator
+                </h1>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-lg-2">
+                <h3>
+                    Floor
+                </h3>
+            </div>
+            <div class="col-lg-2">
+                <h3>
+                    People
+                </h3>
+            </div>
+            <div class="col-lg-4">
+                <h3>
+                    Going To
+                </h3>
+            </div>
+            <div class="col-lg-1 text-center">
+                <h3>
+                    A
+                </h3>
+            </div>
+            <div class="col-lg-1 text-center">
+                <h3>
+                    B
+                </h3>
+            </div>
+            <div class="col-lg-1 text-center">
+                <h3>
+                    C
+                </h3>
+            </div>
+            <div class="col-lg-1 text-center">
+                <h3>
+                    D
+                </h3>
+            </div>
+        </div>
+        <br>
+        {{#each floors}}
+            <div class="row">
+                <div class="col-lg-2">
+                    <h4>
+                        {{floor}}
+                    </h4>
+                </div>
+                <div class="col-lg-2">
+                    <input id="people_at_{{floor}}" class="form-control" value="0" type="number">
+                </div>
+                <div class="col-lg-4">
+                    <ul class="pagination floor-selector">
+                        <li role="presentation"><a>1</a></li>
+                        <li role="presentation"><a>2</a></li>
+                        <li role="presentation"><a>3</a></li>
+                        <li role="presentation"><a>4</a></li>
+                        <li role="presentation"><a>5</a></li>
+                        <li role="presentation"><a>6</a></li>
+                        <li role="presentation"><a>7</a></li>
+                        <li role="presentation"><a>8</a></li>
+                        <li role="presentation"><a>9</a></li>
+                        <li role="presentation"><a>10</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-1 text-center">
+                    <div id="elevator_a_floor_{{floor}}">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="col-lg-1 text-center">
+                    <div id="elevator_b_floor_{{floor}}">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="col-lg-1 text-center">
+                    <div id="elevator_c_floor_{{floor}}">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="col-lg-1 text-center">
+                    <div id="elevator_d_floor_{{floor}}">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+        <br>
+        <div class="row">
+            <div class="col-lg-3">
+                <button class="btn btn-primary" style="width: 100%;">
+                    <i class="fa fa-play"></i> Start Simulation
+                </button>
+            </div>
+            <div class="col-lg-3">
+                <button class="btn btn-primary" style="width: 100%;">
+                    <i class="fa fa-stop"></i> Stop Simulation
+                </button>
+            </div>
+            <div class="col-lg-3">
+                <button class="btn btn-primary" style="width: 100%;">
+                    <i class="fa fa-pause"></i> Resume Simulation
+                </button>
+            </div>
+            <div class="col-lg-3">
+                <button class="btn btn-danger" style="width: 100%;">
+                    <i class="fa fa-close"></i> Reset Simulation
+                </button>
+            </div>
+        </div>
+    </div>
+</script>
