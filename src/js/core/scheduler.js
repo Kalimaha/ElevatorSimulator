@@ -26,17 +26,21 @@ define(['jquery'], function ($) {
         var i;
         this.CONFIG = $.extend(true, {}, this.CONFIG, config);
         for (i = 0; i < this.CONFIG.elevators.length; i += 1) {
-            this.CONFIG.log[this.CONFIG.elevators[i]].session = config.session;
+            this.CONFIG.elevators[i].session = config.session;
         }
     };
 
     SCHEDULER.prototype.update_time = function () {
         var i,
             new_time = 1 + this.CONFIG.time;
+        if (this.CONFIG.log[new_time] === undefined) {
+            this.CONFIG.log[new_time] = {};
+        }
+        console.log(this.CONFIG.log);
         for (i = 0; i < this.CONFIG.elevators.length; i += 1) {
-            if (this.CONFIG.log[this.CONFIG.elevators[i]] === undefined) {
-                this.CONFIG.log[this.CONFIG.elevators[i]] = {
-                    time: new_time
+            if (this.CONFIG.log[new_time][this.CONFIG.elevators[i]] === undefined) {
+                this.CONFIG.log[new_time][this.CONFIG.elevators[i]] = {
+                    id: this.CONFIG.elevators[i].id
                 }
             }
         }
