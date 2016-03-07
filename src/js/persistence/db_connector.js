@@ -33,6 +33,18 @@ define(['jquery', 'q'], function ($, Q) {
         }));
     };
 
+    DB_CONNECTOR.prototype.create = function (environment, elevator) {
+        if (environment !== 'test' && environment !== 'production') {
+            throw new Error('Please provide a valid environment ("test" or "production").')
+        }
+        return Q($.ajax({
+            url: this.CONFIG.urls[environment],
+            traditional: true,
+            data: elevator,
+            type: 'POST'
+        }));
+    };
+
     return DB_CONNECTOR;
 
 });

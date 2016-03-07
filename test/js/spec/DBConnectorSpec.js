@@ -1,5 +1,5 @@
 /*global describe, define, beforeEach, it, expect*/
-define(['db-connector'], function (DBCONNECTOR) {
+define(['db-connector', 'q'], function (DBCONNECTOR, Q) {
 
     'use strict';
 
@@ -33,6 +33,28 @@ define(['db-connector'], function (DBCONNECTOR) {
                 expect(function () {
                     c.get_by_session_and_time('deploy', 'alpha', 1);
                 }).toThrowError('Please provide a valid environment ("test" or "production").');
+            });
+
+        });
+
+        describe('Create an elevator', function () {
+
+            var elevator_1 = {
+                "id": "A",
+                "session": "alpha",
+                "time": 1,
+                "floor": 1,
+                "people": 0,
+                "direction": "stationary",
+                "stops": []
+            };
+
+            it('The elevator should be stored in the DB.', function () {
+                c.create('test', elevator_1).success(function (response) {
+                    console.log(response);
+                }).fail(function (error) {
+                    console.log(error);
+                });
             });
 
         });
