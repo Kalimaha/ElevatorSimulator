@@ -3,6 +3,7 @@ require.config({
     baseUrl: '../src',
     paths: {
         'jquery': ['../test/js/libs/jquery.min'],
+        'q': ['../test/js/libs/q'],
         'jasmine': ['../test/js/libs/jasmine'],
         'jasmine-html': ['../test/js/libs/jasmine-html'],
         'jasmine-boot': ['../test/js/libs/boot'],
