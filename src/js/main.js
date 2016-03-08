@@ -7,6 +7,7 @@ require.config({
 
         app: '../app',
         elevator_simulator: '../core/simulator',
+        scheduler: '../core/scheduler',
         html: '../../html'
 
     },

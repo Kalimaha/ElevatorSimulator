@@ -87,7 +87,7 @@
                     </p>
                 </div>
                 <div class="col-lg-1">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary call_button" data-floor="{{floor}}">
                         CALL
                     </button>
                 </div>
@@ -158,12 +158,13 @@
             </div>
         </div>
     </div>
+    <br>
 </script>
 
 <script type='text/x-handlebars-template' id='elevator_structure'>
     <button class="btn btn-info" style="width: 100%;">
         <div class="badge">
-            0 <i class="fa fa-pause-circle"></i>
+            {{people}} <i class="fa {{direction}}"></i>
         </div>
     </button>
 </script>

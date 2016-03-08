@@ -2,7 +2,8 @@
 define(['jquery',
         'handlebars',
         'text!html/templates.hbs',
-        'bootstrap'], function ($, Handlebars, templates) {
+        'scheduler',
+        'bootstrap'], function ($, Handlebars, templates, SCHEDULER) {
 
     'use strict';
 
@@ -13,7 +14,13 @@ define(['jquery',
             running: false,
             delay: 2000,
             time: 0,
-            timer: null
+            timer: null,
+            session: null,
+            directions: {
+                up: 'fa-arrow-circle-o-up',
+                down: 'fa-arrow-circle-o-down',
+                stationary: 'fa-pause-circle'
+            }
         };
 
     }
@@ -22,6 +29,12 @@ define(['jquery',
 
         /* Extend the default configuration with user's  settings. */
         this.CONFIG = $.extend(true, {}, this.CONFIG, config);
+
+        /* Define a session ID. */
+        this.CONFIG.session = this.generate_session_id();
+
+        /* Initiate components. */
+        this.CONFIG.SCHEDULER = new SCHEDULER();
 
         /* Variables. */
         var source,
@@ -51,7 +64,10 @@ define(['jquery',
         /* Elevators at ground floor. */
         source = $(templates).filter('#elevator_structure').html();
         template = Handlebars.compile(source);
-        html = template({});
+        html = template({
+            people: 0,
+            direction: this.CONFIG.directions.stationary
+        });
         $('#elevator_a_floor_1').html(html);
         $('#elevator_b_floor_1').html(html);
         $('#elevator_c_floor_1').html(html);
@@ -68,6 +84,31 @@ define(['jquery',
             that.reset_simulation();
         });
 
+        /* Call buttons. */
+        $('.call_button').click(function () {
+            if (that.CONFIG.running === true) {
+                var floor = $(this).data('floor'),
+                    people = parseInt($('#people_at_' + floor).val(), 10),
+                    going_to = parseInt($('#going_to_' + floor).val(), 10),
+                    closest;
+                if (people > 0 && !isNaN(going_to) && going_to !== floor) {
+                    closest = that.CONFIG.SCHEDULER.get_closest_elevator(floor);
+                } else {
+                    if (people < 1) {
+                        alert('Please select a valid number of people.');
+                    }
+                    else if (isNaN(going_to)) {
+                        alert('Please select a valid destination.');
+                    }
+                    else if (going_to === floor) {
+                        alert('The destination must be different from the current floor.');
+                    }
+                }
+            } else {
+                alert('Please start the simulation first.');
+            }
+        });
+
     };
 
     APP.prototype.start_simulation = function () {
@@ -76,6 +117,7 @@ define(['jquery',
         this.timer = window.setInterval(function () {
             that.CONFIG.time = 1 + that.CONFIG.time;
             $('#time').html(that.CONFIG.time);
+            that.CONFIG.SCHEDULER.update_time(that.CONFIG.time);
         }, this.CONFIG.delay);
     };
 
@@ -89,6 +131,11 @@ define(['jquery',
         window.clearInterval(this.timer);
         this.CONFIG.time = 0;
         $('#time').html(this.CONFIG.time);
+        this.CONFIG.session = this.generate_session_id();
+    };
+
+    APP.prototype.generate_session_id = function () {
+        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     };
 
     return APP;
