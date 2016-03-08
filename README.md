@@ -17,7 +17,7 @@ The back-end of the application is in charge of storing and retrieving data from
 The back-end has been developed with Python and the [Flask](http://flask.pocoo.org/) micro framework. The source code is available on GitHub at [this link](https://github.com/Kalimaha/ElevatorSimulatorServices).
 
 ### Tests
-The project is under continous integration on the [Travis CI](https://travis-ci.org/) platform. Tests are available and can be executed at [this link](https://travis-ci.org/Kalimaha/ElevatorSimulatorServices).
+The project is under continous integration on the [Travis CI](https://travis-ci.org/) platform. Tests are available and can be executed at [this link](https://travis-ci.org/Kalimaha/ElevatorSimulatorServices). The tests coverage can be found on [Coveralls](https://coveralls.io/) at [this link](https://coveralls.io/github/Kalimaha/ElevatorSimulatorServices).
 
 ### Deploy
 The back-end has been deployed on the [Heroku](https://www.heroku.com/apps) platform and it is available at [this link](https://elevatorsdata.herokuapp.com/elevators/production/).
@@ -26,3 +26,18 @@ The back-end has been deployed on the [Heroku](https://www.heroku.com/apps) plat
 The storage system is hosted by [MongoLab](https://mlab.com/). There is one instance for the production data and one instance that is used to perform tests.
 
 ## Front-end
+[![Build Status](https://travis-ci.org/Kalimaha/ElevatorSimulator.svg?branch=master)](https://travis-ci.org/Kalimaha/ElevatorSimulator)
+
+The front-end has been developed in JavaScript with the [RequireJS](http://requirejs.org/) and [Bootstrap](http://getbootstrap.com/) frameworks.
+
+The client contains a timer (_that can be started and paused by the user_). At each iteration of the clock the system refresh the status of the elevators. When an elevator is requested, the application determines the closest elevator and changes che global schedule accordingly.
+
+The history of each elevator is stored in the remote database and it can be recolled by the corresponding _History_ button available in the interface.
+
+### Source Code
+Source code is available on GitHub at [this link](https://github.com/Kalimaha/ElevatorSimulator).
+
+### Tests
+[Jasmine](http://jasmine.github.io/) has been integrated with RequireJS to allow this project to be under continous integration on the [Travis CI](https://travis-ci.org/) platform. Tests are available and can be executed at [this link](https://travis-ci.org/Kalimaha/ElevatorSimulator/).
+
+### Deploy
