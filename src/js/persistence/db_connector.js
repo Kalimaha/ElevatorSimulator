@@ -18,16 +18,16 @@ define(['jquery', 'q'], function ($, Q) {
         this.CONFIG = $.extend(true, {}, this.CONFIG, config);
     };
 
-    DB_CONNECTOR.prototype.get_by_session_and_time = function (environment, session, time) {
+    DB_CONNECTOR.prototype.get_by_session_and_id = function (environment, session, id) {
         if (environment !== 'test' && environment !== 'production') {
             throw new Error('Please provide a valid environment ("test" or "production").');
         }
         return Q($.ajax({
-            url: this.CONFIG.urls[environment],
+            url: this.CONFIG.urls[environment] + session + '/' + id + '/',
             traditional: true,
             data: {
                 session: session,
-                time: time
+                id: id
             },
             type: 'GET'
         }));

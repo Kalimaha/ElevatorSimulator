@@ -119,22 +119,22 @@
                 &nbsp;
             </div>
             <div class="col-lg-1">
-                <button class="btn btn-primary" style="width: 100%;" id="history_a">
+                <button class="btn btn-primary history_button" style="width: 100%;" data-history="A">
                     History
                 </button>
             </div>
             <div class="col-lg-1">
-                <button class="btn btn-primary" style="width: 100%;" id="history_b">
+                <button class="btn btn-primary history_button" style="width: 100%;" data-history="B">
                     History
                 </button>
             </div>
             <div class="col-lg-1">
-                <button class="btn btn-primary" style="width: 100%;" id="history_c">
+                <button class="btn btn-primary history_button" style="width: 100%;" data-history="C">
                     History
                 </button>
             </div>
             <div class="col-lg-1">
-                <button class="btn btn-primary" style="width: 100%;" id="history_d">
+                <button class="btn btn-primary history_button" style="width: 100%;" data-history="D">
                     History
                 </button>
             </div>
@@ -159,6 +159,33 @@
         </div>
     </div>
     <br>
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal_history" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">History</h4>
+                </div>
+                <div class="modal-body" style="height: 200px; overflow-y: auto;">
+                    <table class="table table-bordered table-responsive table-striped table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Session</th>
+                                <th>Time</th>
+                                <th>Floor</th>
+                                <th>Direction</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modal_content">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </script>
 
 <script type='text/x-handlebars-template' id='elevator_structure'>

@@ -30,6 +30,15 @@ define(['jquery',
 
     APP.prototype.init = function (config) {
 
+        /* Variables. */
+        var source,
+            template,
+            dynamic_data,
+            html,
+            floors = [],
+            i,
+            that = this;
+
         /* Extend the default configuration with user's  settings. */
         this.C = $.extend(true, {}, this.C, config);
 
@@ -40,15 +49,6 @@ define(['jquery',
         this.C.SCHEDULER = new SCHEDULER();
         this.C.SCHEDULER.init({session: this.C.session});
         this.C.DBCONNECTOR = new DBCONNECTOR();
-
-        /* Variables. */
-        var source,
-            template,
-            dynamic_data,
-            html,
-            floors = [],
-            i,
-            that = this;
 
         /* Initiate floors. */
         for (i = 10; i > 0; i -= 1) {
@@ -94,6 +94,24 @@ define(['jquery',
             that.call_elevator(this);
         });
 
+        /* History buttons. */
+        $('.history_button').click(function () {
+            that.show_history($(this).data('history'));
+        });
+
+    };
+
+    APP.prototype.show_history = function (elevator_id) {
+        this.C.DBCONNECTOR.get_by_session_and_id('test', this.C.session, elevator_id).then(function (response) {
+            var s = '', i;
+            for (i = 0; i < response.length; i += 1) {
+                s += '<tr><td>' + response[i].session + '</td><td>' + response[i].time + '</td><td>' + response[i].floor + '</td><td>' + response[i].direction + '</td></tr>';
+            }
+            $('#modal_content').append(s);
+            $('#modal_history').modal('show');
+        }).fail(function (error) {
+            console.log(error);
+        });
     };
 
     APP.prototype.call_elevator = function (button) {
@@ -134,18 +152,7 @@ define(['jquery',
             people,
             going_to,
             j,
-            people_left,
-            elevator;
-
-        /* Persist elevators. */
-        for (i = 0; i < Object.keys(this.C.SCHEDULER.C.elevators).length; i += 1) {
-            elevator_id = Object.keys(this.C.SCHEDULER.C.elevators)[i];
-            elevator = this.C.SCHEDULER.C.elevators[elevator_id];
-            elevator.id = elevator_id;
-            this.C.DBCONNECTOR.create('test', elevator).then(function (response) {
-                /* stored correctly */
-            });
-        }
+            people_left;
 
         /* Load elevator template. */
         source = $(templates).filter('#elevator_structure').html();
@@ -167,6 +174,13 @@ define(['jquery',
             };
             html = template(dynamic_data);
             $('#elevator_' + elevator_id.toLowerCase() + '_floor_' + this.C.SCHEDULER.C.elevators[elevator_id].floor).html(html);
+
+            /* Persist the elevator. */
+            this.C.SCHEDULER.C.elevators[elevator_id].id = elevator_id;
+            this.C.SCHEDULER.C.elevators[elevator_id].time = this.C.time;
+            this.C.DBCONNECTOR.create('test', this.C.SCHEDULER.C.elevators[elevator_id]).then(function (response) {
+                /* stored correctly */
+            });
 
             /* Check whether the elevator has to stop. */
             if (this.C.SCHEDULER.C.elevators[elevator_id].floor === this.C.SCHEDULER.C.elevators[elevator_id].stops[0]) {
