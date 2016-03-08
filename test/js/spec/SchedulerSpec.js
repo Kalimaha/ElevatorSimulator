@@ -69,12 +69,11 @@ define(['scheduler'], function (SCHEDULER) {
 
             describe('When origin floor is lower than destination floor.', function () {
 
-                s.init({
-                    session: 'alpha'
-                });
-                s.route('A', 1, 5, 0);
-
                 it('There is a route in 5 steps.', function () {
+                    s.init({
+                        session: 'alpha'
+                    });
+                    s.route('A', 1, 5, 0);
                     expect(s.C.log.t1.A).not.toBeUndefined();
                     expect(s.C.log.t1.A.floor).toEqual(1);
                     expect(s.C.log.t2.A).not.toBeUndefined();
