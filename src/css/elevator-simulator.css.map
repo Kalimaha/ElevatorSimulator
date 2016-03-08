@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,eAAgB;EACd,UAAU,EAAE,CAAC;EACb,aAAa,EAAE,CAAC",
-"sources": ["elevator-simulator.scss"],
-"names": [],
-"file": "elevator-simulator.css"
-}
