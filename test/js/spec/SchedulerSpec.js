@@ -65,17 +65,17 @@ define(['scheduler'], function (SCHEDULER) {
 
         });
 
-        describe('Closest Elevator', function () {
-
-            it('The closest elevator is provided to the user.', function () {
-                s.init({
-                    session: 'alpha'
-                });
-                expect(s.get_closest_elevator(10)).toEqual('D');
-                expect(s.get_closest_elevator(9)).toEqual('D');
-            });
-
-        });
+        //describe('Closest Elevator', function () {
+        //
+        //    it('The closest elevator is provided to the user.', function () {
+        //        s.init({
+        //            session: 'alpha'
+        //        });
+        //        expect(s.get_closest_elevator(10)).toEqual('D');
+        //        expect(s.get_closest_elevator(9)).toEqual('D');
+        //    });
+        //
+        //});
 
     });
 
