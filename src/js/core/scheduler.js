@@ -84,8 +84,9 @@ define(['jquery', 'elevator', 'dbconnector'], function ($, ELEVATOR, DBCONNECTOR
             schedule,
             elevator;
         schedule = this.C.log['t' + this.C.current_time];
-        for (i = 0; i < Object.keys(schedule).length; i += 1) {
-            dist = Math.abs(schedule[Object.keys(schedule)[i]].floor - floor);
+        for (i = 0; i < Object.keys(this.C.elevators).length; i += 1) {
+            console.log(this.C.elevators[Object.keys(this.C.elevators)[i]].floor);
+            dist = Math.abs(this.C.elevators[Object.keys(this.C.elevators)[i]].floor - floor);
             if (dist <= min) {
                 min = dist;
                 elevator = Object.keys(schedule)[i];
