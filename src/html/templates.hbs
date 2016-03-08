@@ -97,17 +97,17 @@
                     </div>
                 </div>
                 <div class="col-lg-1 text-center">
-                    <div id="elevator_b_floor_{{floor}}">
+                    <div id="elevator_b_floor_{{floor}}" class="elevator_b">
                         |
                     </div>
                 </div>
                 <div class="col-lg-1 text-center">
-                    <div id="elevator_c_floor_{{floor}}">
+                    <div id="elevator_c_floor_{{floor}}" class="elevator_c">
                         |
                     </div>
                 </div>
                 <div class="col-lg-1 text-center">
-                    <div id="elevator_d_floor_{{floor}}">
+                    <div id="elevator_d_floor_{{floor}}" class="elevator_d">
                         |
                     </div>
                 </div>
@@ -164,7 +164,7 @@
 <script type='text/x-handlebars-template' id='elevator_structure'>
     <button class="btn btn-info" style="width: 100%;">
         <div class="badge">
-            {{people}} <i class="fa {{direction}}"></i>
+            {{people.length}} <i class="fa {{direction}}"></i>
         </div>
     </button>
 </script>

@@ -12,7 +12,7 @@ define(['jquery',
         this.CONFIG = {
             placeholder_id: 'placeholder',
             running: false,
-            delay: 2000,
+            delay: 1000,
             time: 0,
             timer: null,
             session: null,
@@ -20,7 +20,8 @@ define(['jquery',
                 up: 'fa-arrow-circle-o-up',
                 down: 'fa-arrow-circle-o-down',
                 stationary: 'fa-pause-circle'
-            }
+            },
+            max_people: 20
         };
 
     }
@@ -65,7 +66,7 @@ define(['jquery',
         source = $(templates).filter('#elevator_structure').html();
         template = Handlebars.compile(source);
         html = template({
-            people: 0,
+            people: [],
             direction: this.CONFIG.directions.stationary
         });
         $('#elevator_a_floor_1').html(html);
@@ -86,33 +87,35 @@ define(['jquery',
 
         /* Call buttons. */
         $('.call_button').click(function () {
-            if (that.CONFIG.running === true) {
-                var floor = $(this).data('floor'),
-                    people = parseInt($('#people_at_' + floor).val(), 10),
-                    going_to = parseInt($('#going_to_' + floor).val(), 10),
-                    closest_elevator;
-                if (people > 0 && !isNaN(going_to) && going_to !== floor) {
-                    closest_elevator = that.CONFIG.SCHEDULER.get_closest_elevator(floor);
-                    that.CONFIG.SCHEDULER.add_to_schedule(closest_elevator, floor, going_to);
-                } else {
-                    if (people < 1) {
-                        alert('Please select a valid number of people.');
-                    }
-                    else if (isNaN(going_to)) {
-                        alert('Please select a valid destination.');
-                    }
-                    else if (going_to === floor) {
-                        alert('The destination must be different from the current floor.');
-                    }
-                }
-            } else {
-                alert('Please start the simulation first.');
-            }
+            that.call_elevator(this);
         });
 
     };
 
-    APP.prototype.draw_elevators = function () {
+    APP.prototype.call_elevator = function (button) {
+        if (this.CONFIG.running === true) {
+            var floor = $(button).data('floor'),
+                people = parseInt($('#people_at_' + floor).val(), 10),
+                going_to = parseInt($('#going_to_' + floor).val(), 10),
+                closest_elevator;
+            if (people > 0 && !isNaN(going_to) && going_to !== floor) {
+                closest_elevator = this.CONFIG.SCHEDULER.get_closest_elevator(floor);
+                this.CONFIG.SCHEDULER.add_to_schedule(closest_elevator, floor, going_to);
+            } else {
+                if (people < 1) {
+                    alert('Please select a valid number of people.');
+                } else if (isNaN(going_to)) {
+                    alert('Please select a valid destination.');
+                } else if (going_to === floor) {
+                    alert('The destination must be different from the current floor.');
+                }
+            }
+        } else {
+            alert('Please start the simulation first.');
+        }
+    };
+
+    APP.prototype.update_elevators = function () {
 
         /* Initiate variables. */
         var i,
@@ -120,10 +123,13 @@ define(['jquery',
             source,
             template,
             dynamic_data,
-            html;
+            html,
+            people,
+            going_to,
+            j,
+            people_left;
 
         /* Load elevator template. */
-        /* Elevators at ground floor. */
         source = $(templates).filter('#elevator_structure').html();
         template = Handlebars.compile(source);
         html = template({
@@ -131,7 +137,10 @@ define(['jquery',
             direction: this.CONFIG.directions.stationary
         });
 
+        /* Iterate over elevators. */
         for (i = 0; i < Object.keys(this.CONFIG.SCHEDULER.CONFIG.elevators).length; i += 1) {
+
+            /* Draw the elevator. */
             elevator_id = Object.keys(this.CONFIG.SCHEDULER.CONFIG.elevators)[i];
             $('.elevator_' + elevator_id.toLowerCase()).html('|');
             dynamic_data = {
@@ -140,8 +149,48 @@ define(['jquery',
             };
             html = template(dynamic_data);
             $('#elevator_' + elevator_id.toLowerCase() + '_floor_' + this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor).html(html);
+
+            /* Check whether the elevator has to stop. */
+            if (this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor === this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].stops[0]) {
+
+                /* The elevator has to stop: change icon. */
+                this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].direction = 'stationary';
+
+                /* Fetch parameters. */
+                people = $('#people_at_' + this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor).val();
+                going_to = $('#going_to_' + this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor).val();
+
+                /* Disembark people at this floor. */
+                if (this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people.length > 0) {
+                    for (j = this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people.length - 1; j >= 0; j -= 1) {
+                        if (this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people[j].disembark_at == this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor) {
+                            this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people.splice(j, 1);
+                        }
+                    }
+                }
+
+                /* Embark people, up to 20. */
+                people_left = 0;
+                for (j = 0; j < people; j += 1) {
+                    if (this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people.length < this.CONFIG.max_people) {
+                        this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people.push({
+                            disembark_at: going_to
+                        });
+                    } else {
+                        people_left += 1;
+                    }
+                }
+
+                /* Update the number of people waiting at the floor. */
+                $('#people_at_' + this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor).val(people_left);
+
+                /* Remove this stop from the elvator's schedule. */
+                this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].stops.splice(0, 1);
+
+            }
+
         }
-        console.log('');
+
     };
 
     APP.prototype.start_simulation = function () {
@@ -151,7 +200,7 @@ define(['jquery',
             that.CONFIG.time = 1 + that.CONFIG.time;
             $('#time').html(that.CONFIG.time);
             that.CONFIG.SCHEDULER.update_time(that.CONFIG.time);
-            that.draw_elevators();
+            that.update_elevators();
         }, this.CONFIG.delay);
     };
 
