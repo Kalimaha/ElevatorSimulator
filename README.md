@@ -7,6 +7,9 @@ The elevator Simulator is an Elevator system with a web frontend and backend sto
 * Each level should have dropdown menu and button beside it to represent the level / floor that the people on the said level wish to travel to
 * On each level there should be another 4 columns which show each elevator status. That is, the number of people in the current elevator and whether it’s going up (^) down (\/) or stationary (-)
 
+## UI Preview
+![Elevator Simulator](src/images/ElevatorSimulator.png)
+
 ## Back-end
 [![Build Status](https://travis-ci.org/Kalimaha/ElevatorSimulatorServices.svg?branch=master)](https://travis-ci.org/Kalimaha/ElevatorSimulatorServices)
 [![Coverage Status](https://coveralls.io/repos/github/Kalimaha/ElevatorSimulatorServices/badge.svg?branch=master)](https://coveralls.io/github/Kalimaha/ElevatorSimulatorServices?branch=master)
