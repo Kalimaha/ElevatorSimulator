@@ -4,12 +4,12 @@ require.config({
     baseUrl: 'src/js/libs',
 
     paths: {
-
         app: '../app',
-        elevator_simulator: '../core/simulator',
+        html: '../../html',
+        person: '../models/person',
         scheduler: '../core/scheduler',
-        html: '../../html'
-
+        elevator: '../models/elevator',
+        elevator_simulator: '../core/simulator'
     },
 
     shim: {

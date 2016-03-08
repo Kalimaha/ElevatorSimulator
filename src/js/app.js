@@ -3,13 +3,14 @@ define(['jquery',
         'handlebars',
         'text!html/templates.hbs',
         'scheduler',
-        'bootstrap'], function ($, Handlebars, templates, SCHEDULER) {
+        'person',
+        'bootstrap'], function ($, Handlebars, templates, SCHEDULER, PERSON) {
 
     'use strict';
 
     function APP() {
 
-        this.CONFIG = {
+        this.C = {
             placeholder_id: 'placeholder',
             running: false,
             delay: 1000,
@@ -29,13 +30,14 @@ define(['jquery',
     APP.prototype.init = function (config) {
 
         /* Extend the default configuration with user's  settings. */
-        this.CONFIG = $.extend(true, {}, this.CONFIG, config);
+        this.C = $.extend(true, {}, this.C, config);
 
         /* Define a session ID. */
-        this.CONFIG.session = this.generate_session_id();
+        this.C.session = this.generate_session_id();
 
         /* Initiate components. */
-        this.CONFIG.SCHEDULER = new SCHEDULER();
+        this.C.SCHEDULER = new SCHEDULER();
+        this.C.SCHEDULER.init({session: this.C.session});
 
         /* Variables. */
         var source,
@@ -60,14 +62,14 @@ define(['jquery',
             floors: floors
         };
         html = template(dynamic_data);
-        $('#' + this.CONFIG.placeholder_id).html(html);
+        $('#' + this.C.placeholder_id).html(html);
 
         /* Elevators at ground floor. */
         source = $(templates).filter('#elevator_structure').html();
         template = Handlebars.compile(source);
         html = template({
             people: [],
-            direction: this.CONFIG.directions.stationary
+            direction: this.C.directions.stationary
         });
         $('#elevator_a_floor_1').html(html);
         $('#elevator_b_floor_1').html(html);
@@ -93,14 +95,17 @@ define(['jquery',
     };
 
     APP.prototype.call_elevator = function (button) {
-        if (this.CONFIG.running === true) {
+        if (this.C.running === true) {
             var floor = $(button).data('floor'),
                 people = parseInt($('#people_at_' + floor).val(), 10),
                 going_to = parseInt($('#going_to_' + floor).val(), 10),
                 closest_elevator;
             if (people > 0 && !isNaN(going_to) && going_to !== floor) {
-                closest_elevator = this.CONFIG.SCHEDULER.get_closest_elevator(floor);
-                this.CONFIG.SCHEDULER.add_to_schedule(closest_elevator, floor, going_to);
+                closest_elevator = this.C.SCHEDULER.get_closest_elevator(floor);
+                this.C.SCHEDULER.add_to_schedule(closest_elevator, floor, going_to);
+                $('#going_to_' + floor).prop('disabled', true);
+                $('#call_' + floor).prop('disabled', true);
+                $('#status_' + floor).html('WAITING');
             } else {
                 if (people < 1) {
                     alert('Please select a valid number of people.');
@@ -127,44 +132,49 @@ define(['jquery',
             people,
             going_to,
             j,
-            people_left;
+            people_left,
+            going_to_div,
+            people_at_div;
 
         /* Load elevator template. */
         source = $(templates).filter('#elevator_structure').html();
         template = Handlebars.compile(source);
         html = template({
             people: 0,
-            direction: this.CONFIG.directions.stationary
+            direction: this.C.directions.stationary
         });
 
         /* Iterate over elevators. */
-        for (i = 0; i < Object.keys(this.CONFIG.SCHEDULER.CONFIG.elevators).length; i += 1) {
+        for (i = 0; i < Object.keys(this.C.SCHEDULER.C.elevators).length; i += 1) {
 
             /* Draw the elevator. */
-            elevator_id = Object.keys(this.CONFIG.SCHEDULER.CONFIG.elevators)[i];
+            elevator_id = Object.keys(this.C.SCHEDULER.C.elevators)[i];
             $('.elevator_' + elevator_id.toLowerCase()).html('|');
             dynamic_data = {
-                people: this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people,
-                direction: this.CONFIG.directions[this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].direction]
+                people: this.C.SCHEDULER.C.elevators[elevator_id].people,
+                direction: this.C.directions[this.C.SCHEDULER.C.elevators[elevator_id].direction]
             };
             html = template(dynamic_data);
-            $('#elevator_' + elevator_id.toLowerCase() + '_floor_' + this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor).html(html);
+            $('#elevator_' + elevator_id.toLowerCase() + '_floor_' + this.C.SCHEDULER.C.elevators[elevator_id].floor).html(html);
 
             /* Check whether the elevator has to stop. */
-            if (this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor === this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].stops[0]) {
+            if (this.C.SCHEDULER.C.elevators[elevator_id].floor === this.C.SCHEDULER.C.elevators[elevator_id].stops[0]) {
 
                 /* The elevator has to stop: change icon. */
-                this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].direction = 'stationary';
+                this.C.SCHEDULER.C.elevators[elevator_id].direction = 'stationary';
+                $('#going_to_' + this.C.SCHEDULER.C.elevators[elevator_id].floor).prop('disabled', false);
+                $('#call_' + this.C.SCHEDULER.C.elevators[elevator_id].floor).prop('disabled', false);
+                $('#status_' + this.C.SCHEDULER.C.elevators[elevator_id].floor).html('ON HOLD');
 
                 /* Fetch parameters. */
-                people = $('#people_at_' + this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor).val();
-                going_to = $('#going_to_' + this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor).val();
+                people = $('#people_at_' + this.C.SCHEDULER.C.elevators[elevator_id].floor).val();
+                going_to = $('#going_to_' + this.C.SCHEDULER.C.elevators[elevator_id].floor).val();
 
                 /* Disembark people at this floor. */
-                if (this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people.length > 0) {
-                    for (j = this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people.length - 1; j >= 0; j -= 1) {
-                        if (this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people[j].disembark_at == this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor) {
-                            this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people.splice(j, 1);
+                if (this.C.SCHEDULER.C.elevators[elevator_id].people.length > 0) {
+                    for (j = this.C.SCHEDULER.C.elevators[elevator_id].people.length - 1; j >= 0; j -= 1) {
+                        if (this.C.SCHEDULER.C.elevators[elevator_id].people[j].disembark_at == this.C.SCHEDULER.C.elevators[elevator_id].floor) {
+                            this.C.SCHEDULER.C.elevators[elevator_id].people.splice(j, 1);
                         }
                     }
                 }
@@ -172,20 +182,18 @@ define(['jquery',
                 /* Embark people, up to 20. */
                 people_left = 0;
                 for (j = 0; j < people; j += 1) {
-                    if (this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people.length < this.CONFIG.max_people) {
-                        this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people.push({
-                            disembark_at: going_to
-                        });
+                    if (this.C.SCHEDULER.C.elevators[elevator_id].people.length < this.C.max_people) {
+                        this.C.SCHEDULER.C.elevators[elevator_id].people.push(new PERSON(going_to));
                     } else {
                         people_left += 1;
                     }
                 }
 
                 /* Update the number of people waiting at the floor. */
-                $('#people_at_' + this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor).val(people_left);
+                $('#people_at_' + this.C.SCHEDULER.C.elevators[elevator_id].floor).val(people_left);
 
                 /* Remove this stop from the elvator's schedule. */
-                this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].stops.splice(0, 1);
+                this.C.SCHEDULER.C.elevators[elevator_id].stops.splice(0, 1);
 
             }
 
@@ -195,26 +203,26 @@ define(['jquery',
 
     APP.prototype.start_simulation = function () {
         var that = this;
-        this.CONFIG.running = true;
+        this.C.running = true;
         this.timer = window.setInterval(function () {
-            that.CONFIG.time = 1 + that.CONFIG.time;
-            $('#time').html(that.CONFIG.time);
-            that.CONFIG.SCHEDULER.update_time(that.CONFIG.time);
+            that.C.time = 1 + that.C.time;
+            $('#time').html(that.C.time);
+            that.C.SCHEDULER.update_time(that.C.time);
             that.update_elevators();
-        }, this.CONFIG.delay);
+        }, this.C.delay);
     };
 
     APP.prototype.pause_simulation = function () {
-        this.CONFIG.running = false;
+        this.C.running = false;
         window.clearInterval(this.timer);
     };
 
     APP.prototype.reset_simulation = function () {
-        this.CONFIG.running = false;
+        this.C.running = false;
         window.clearInterval(this.timer);
-        this.CONFIG.time = 0;
-        $('#time').html(this.CONFIG.time);
-        this.CONFIG.session = this.generate_session_id();
+        this.C.time = 0;
+        $('#time').html(this.C.time);
+        this.C.session = this.generate_session_id();
     };
 
     APP.prototype.generate_session_id = function () {
