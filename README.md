@@ -8,5 +8,6 @@ The elevator Simulator is an Elevator system with a web frontend and backend sto
 * On each level there should be another 4 columns which show each elevator status. That is, the number of people in the current elevator and whether it’s going up (^) down (\/) or stationary (-)
 
 ## Back-end
+[![Build Status](https://travis-ci.org/Kalimaha/ElevatorSimulatorServices.svg?branch=master)](https://travis-ci.org/Kalimaha/ElevatorSimulatorServices)
 
 ## Front-end
