@@ -90,9 +90,10 @@ define(['jquery',
                 var floor = $(this).data('floor'),
                     people = parseInt($('#people_at_' + floor).val(), 10),
                     going_to = parseInt($('#going_to_' + floor).val(), 10),
-                    closest;
+                    closest_elevator;
                 if (people > 0 && !isNaN(going_to) && going_to !== floor) {
-                    closest = that.CONFIG.SCHEDULER.get_closest_elevator(floor);
+                    closest_elevator = that.CONFIG.SCHEDULER.get_closest_elevator(floor);
+                    that.CONFIG.SCHEDULER.add_to_schedule(closest_elevator, floor, going_to);
                 } else {
                     if (people < 1) {
                         alert('Please select a valid number of people.');
@@ -111,6 +112,38 @@ define(['jquery',
 
     };
 
+    APP.prototype.draw_elevators = function () {
+
+        /* Initiate variables. */
+        var i,
+            elevator_id,
+            source,
+            template,
+            dynamic_data,
+            html;
+
+        /* Load elevator template. */
+        /* Elevators at ground floor. */
+        source = $(templates).filter('#elevator_structure').html();
+        template = Handlebars.compile(source);
+        html = template({
+            people: 0,
+            direction: this.CONFIG.directions.stationary
+        });
+
+        for (i = 0; i < Object.keys(this.CONFIG.SCHEDULER.CONFIG.elevators).length; i += 1) {
+            elevator_id = Object.keys(this.CONFIG.SCHEDULER.CONFIG.elevators)[i];
+            $('.elevator_' + elevator_id.toLowerCase()).html('|');
+            dynamic_data = {
+                people: this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].people,
+                direction: this.CONFIG.directions[this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].direction]
+            };
+            html = template(dynamic_data);
+            $('#elevator_' + elevator_id.toLowerCase() + '_floor_' + this.CONFIG.SCHEDULER.CONFIG.elevators[elevator_id].floor).html(html);
+        }
+        console.log('');
+    };
+
     APP.prototype.start_simulation = function () {
         var that = this;
         this.CONFIG.running = true;
@@ -118,6 +151,7 @@ define(['jquery',
             that.CONFIG.time = 1 + that.CONFIG.time;
             $('#time').html(that.CONFIG.time);
             that.CONFIG.SCHEDULER.update_time(that.CONFIG.time);
+            that.draw_elevators();
         }, this.CONFIG.delay);
     };
 
