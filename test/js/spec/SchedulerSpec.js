@@ -67,13 +67,22 @@ define(['scheduler'], function (SCHEDULER) {
 
         describe('Elevators routing function.', function () {
 
-            it('When origin floor is lower than destination floor.', function () {
+            describe('When origin floor is lower than destination floor.', function () {
+
                 s.init({
                     session: 'alpha'
                 });
                 s.route('A', 1, 5, 0);
-                console.log(s.C.log.t1.A);
-                expect(s.C.log.t1.A).not.toBeUndefined();
+
+                it('There is a route in 5 steps.', function () {
+                    expect(s.C.log.t1.A).not.toBeUndefined();
+                    expect(s.C.log.t1.A.floor).toEqual(1);
+                    expect(s.C.log.t2.A).not.toBeUndefined();
+                    expect(s.C.log.t3.A).not.toBeUndefined();
+                    expect(s.C.log.t4.A).not.toBeUndefined();
+                    expect(s.C.log.t5.A).not.toBeUndefined();
+                });
+
             });
 
         });
