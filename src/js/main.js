@@ -9,7 +9,7 @@ require.config({
         person: '../models/person',
         scheduler: '../core/scheduler',
         elevator: '../models/elevator',
-        db_connector: '../persistence/db_connector'
+        dbconnector: '../persistence/dbconnector'
     },
 
     shim: {

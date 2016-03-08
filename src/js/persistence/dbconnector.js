@@ -3,7 +3,7 @@ define(['jquery', 'q'], function ($, Q) {
 
     'use strict';
 
-    function DB_CONNECTOR() {
+    function DBCONNECTOR() {
 
         this.CONFIG = {
             urls: {
@@ -14,11 +14,11 @@ define(['jquery', 'q'], function ($, Q) {
 
     }
 
-    DB_CONNECTOR.prototype.init = function (config) {
+    DBCONNECTOR.prototype.init = function (config) {
         this.CONFIG = $.extend(true, {}, this.CONFIG, config);
     };
 
-    DB_CONNECTOR.prototype.get_by_session_and_id = function (environment, session, id) {
+    DBCONNECTOR.prototype.get_by_session_and_id = function (environment, session, id) {
         if (environment !== 'test' && environment !== 'production') {
             throw new Error('Please provide a valid environment ("test" or "production").');
         }
@@ -33,7 +33,7 @@ define(['jquery', 'q'], function ($, Q) {
         }));
     };
 
-    DB_CONNECTOR.prototype.create = function (environment, elevator) {
+    DBCONNECTOR.prototype.create = function (environment, elevator) {
         if (environment !== 'test' && environment !== 'production') {
             throw new Error('Please provide a valid environment ("test" or "production").');
         }
@@ -46,6 +46,6 @@ define(['jquery', 'q'], function ($, Q) {
         }));
     };
 
-    return DB_CONNECTOR;
+    return DBCONNECTOR;
 
 });

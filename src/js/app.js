@@ -4,7 +4,7 @@ define(['jquery',
         'text!html/templates.hbs',
         'scheduler',
         'person',
-        'db_connector',
+        'dbconnector',
         'bootstrap'], function ($, Handlebars, templates, SCHEDULER, PERSON, DBCONNECTOR) {
 
     'use strict';

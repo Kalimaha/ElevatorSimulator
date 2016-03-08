@@ -1,5 +1,5 @@
 /*global define*/
-define(['jquery', 'elevator', 'db_connector'], function ($, ELEVATOR, DBCONNECTOR) {
+define(['jquery', 'elevator', 'dbconnector'], function ($, ELEVATOR, DBCONNECTOR) {
 
     'use strict';
 

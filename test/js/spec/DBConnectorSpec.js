@@ -1,5 +1,5 @@
 /*global describe, define, beforeEach, it, expect*/
-define(['db-connector', 'q'], function (DBCONNECTOR, Q) {
+define(['dbconnector', 'q'], function (DBCONNECTOR, Q) {
 
     'use strict';
 
