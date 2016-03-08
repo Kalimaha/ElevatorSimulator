@@ -1,5 +1,5 @@
 /*global define*/
-define(['jquery', 'elevator'], function ($, ELEVATOR) {
+define(['jquery', 'elevator', 'db_connector'], function ($, ELEVATOR, DBCONNECTOR) {
 
     'use strict';
 
@@ -25,9 +25,11 @@ define(['jquery', 'elevator'], function ($, ELEVATOR) {
         }
         var i;
         this.C = $.extend(true, {}, this.C, config);
-        for (i = 0; i < this.C.elevators.length; i += 1) {
-            this.C.elevators[i].session = config.session;
+        for (i = 0; i < Object.keys(this.C.elevators).length; i += 1) {
+            this.C.elevators[Object.keys(this.C.elevators)[i]].session = config.session;
+            console.log(this.C.elevators[Object.keys(this.C.elevators)[i]].session);
         }
+        this.C.DBCONNECTOR = new DBCONNECTOR();
     };
 
     SCHEDULER.prototype.update_time = function (new_time) {
@@ -35,7 +37,8 @@ define(['jquery', 'elevator'], function ($, ELEVATOR) {
         /* Initiate variables. */
         var i,
             elevator_id,
-            old_floor;
+            old_floor,
+            schedule;
 
         /* Add a new entry to the log. The key is the t plus the time, e.g. t4. */
         if (this.C.log["t" + new_time] === undefined) {
@@ -118,6 +121,8 @@ define(['jquery', 'elevator'], function ($, ELEVATOR) {
                 }
                 this.C.log['t' + time][elevator_id] = {};
                 this.C.log['t' + time][elevator_id].floor = i;
+                this.C.elevators[elevator_id].time = time;
+                this.C.elevators[elevator_id].id = elevator_id;
             }
         } else {
             for (i = from_floor; i >= to_floor; i -= 1) {
@@ -127,6 +132,8 @@ define(['jquery', 'elevator'], function ($, ELEVATOR) {
                 }
                 this.C.log['t' + time][elevator_id] = {};
                 this.C.log['t' + time][elevator_id].floor = i;
+                this.C.elevators[elevator_id].time = time;
+                this.C.elevators[elevator_id].id = elevator_id;
             }
         }
         return time;

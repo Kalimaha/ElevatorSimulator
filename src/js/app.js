@@ -4,7 +4,8 @@ define(['jquery',
         'text!html/templates.hbs',
         'scheduler',
         'person',
-        'bootstrap'], function ($, Handlebars, templates, SCHEDULER, PERSON) {
+        'db_connector',
+        'bootstrap'], function ($, Handlebars, templates, SCHEDULER, PERSON, DBCONNECTOR) {
 
     'use strict';
 
@@ -13,7 +14,7 @@ define(['jquery',
         this.C = {
             placeholder_id: 'placeholder',
             running: false,
-            delay: 1000,
+            delay: 2000,
             time: 0,
             timer: null,
             session: null,
@@ -38,6 +39,7 @@ define(['jquery',
         /* Initiate components. */
         this.C.SCHEDULER = new SCHEDULER();
         this.C.SCHEDULER.init({session: this.C.session});
+        this.C.DBCONNECTOR = new DBCONNECTOR();
 
         /* Variables. */
         var source,
@@ -133,8 +135,17 @@ define(['jquery',
             going_to,
             j,
             people_left,
-            going_to_div,
-            people_at_div;
+            elevator;
+
+        /* Persist elevators. */
+        for (i = 0; i < Object.keys(this.C.SCHEDULER.C.elevators).length; i += 1) {
+            elevator_id = Object.keys(this.C.SCHEDULER.C.elevators)[i];
+            elevator = this.C.SCHEDULER.C.elevators[elevator_id];
+            elevator.id = elevator_id;
+            this.C.DBCONNECTOR.create('test', elevator).then(function (response) {
+                /* stored correctly */
+            });
+        }
 
         /* Load elevator template. */
         source = $(templates).filter('#elevator_structure').html();

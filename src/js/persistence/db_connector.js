@@ -39,8 +39,9 @@ define(['jquery', 'q'], function ($, Q) {
         }
         return Q($.ajax({
             url: this.CONFIG.urls[environment],
-            traditional: true,
-            data: elevator,
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(elevator),
             type: 'POST'
         }));
     };
