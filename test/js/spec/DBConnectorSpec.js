@@ -36,7 +36,7 @@ define(['dbconnector', 'q'], function (DBCONNECTOR, Q) {
             });
 
             it('The connector should retrieve data from the DB.', function () {
-                c.get_by_session_and_id('test', 'alpha', 'A').success(function (response) {
+                c.get_by_session_and_id('test', 'alpha', 'A').then(function (response) {
                     expect(response).not.toBeUndefined();
                 });
             });
@@ -56,7 +56,7 @@ define(['dbconnector', 'q'], function (DBCONNECTOR, Q) {
             };
 
             it('The elevator should be stored in the DB.', function () {
-                c.create('test', elevator_1).success(function (response) {
+                c.create('test', elevator_1).then(function (response) {
                     expect(response).not.toBeUndefined();
                 });
             });
