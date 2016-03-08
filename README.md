@@ -41,3 +41,4 @@ Source code is available on GitHub at [this link](https://github.com/Kalimaha/El
 [Jasmine](http://jasmine.github.io/) has been integrated with RequireJS to allow this project to be under continous integration on the [Travis CI](https://travis-ci.org/) platform. Tests are available and can be executed at [this link](https://travis-ci.org/Kalimaha/ElevatorSimulator/).
 
 ### Deploy
+The front-end has been deployed on the GitHub hosting and it is available at [this link](http://kalimaha.github.io/ElevatorSimulator).
