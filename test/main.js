@@ -8,7 +8,7 @@ require.config({
         'jasmine-html': ['../test/js/libs/jasmine-html'],
         'jasmine-boot': ['../test/js/libs/boot'],
         'scheduler': ['../src/js/core/scheduler'],
-        'db-connector': ['../src/js/persistence/db_connector'],
+        //'db-connector': ['../src/js/persistence/db_connector'],
         'simulator-spec': ['../test/js/spec/SchedulerSpec'],
         'db-connector-spec': ['../test/js/spec/DBConnectorSpec'],
         'person': ['../src/js/models/person'],
