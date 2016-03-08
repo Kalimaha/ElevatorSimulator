@@ -30,6 +30,7 @@
                                 'dbconnector': ['../src/js/persistence/dbconnector'],
                                 'simulator-spec': ['../test/js/spec/SchedulerSpec'],
                                 'dbconnector-spec': ['../test/js/spec/DBConnectorSpec'],
+                                'elevator-spec': ['../test/js/spec/ElevatorSpec'],
                                 'person': ['../src/js/models/person'],
                                 'elevator': ['../src/js/models/elevator']
                             },
