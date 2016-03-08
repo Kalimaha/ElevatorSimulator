@@ -12,6 +12,7 @@ require.config({
         'simulator-spec': ['../test/js/spec/SchedulerSpec'],
         'dbconnector-spec': ['../test/js/spec/DBConnectorSpec'],
         'elevator-spec': ['../test/js/spec/ElevatorSpec'],
+        'person-spec': ['../test/js/spec/PersonSpec'],
         'person': ['../src/js/models/person'],
         'elevator': ['../src/js/models/elevator']
     },
