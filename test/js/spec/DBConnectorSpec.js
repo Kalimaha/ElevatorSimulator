@@ -31,7 +31,7 @@ define(['dbconnector', 'q'], function (DBCONNECTOR, Q) {
 
             it('The connector refuses invalid environments.', function () {
                 expect(function () {
-                    c.get_by_session_and_time('deploy', 'alpha', 1);
+                    c.get_by_session_and_id('deploy', 'alpha', 'A');
                 }).toThrowError('Please provide a valid environment ("test" or "production").');
             });
 

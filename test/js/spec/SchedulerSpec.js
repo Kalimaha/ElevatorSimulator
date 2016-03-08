@@ -14,11 +14,11 @@ define(['scheduler'], function (SCHEDULER) {
         describe('Configurability', function () {
 
             it('The simulator should start at t = 0', function () {
-                expect(s.CONFIG.time).toEqual(0);
+                expect(s.C.time).toEqual(0);
             });
 
             it('The simulator should have 4 initial elevators', function () {
-                expect(s.CONFIG.elevators.length).toEqual(4);
+                expect(s.C.elevators.length).toEqual(4);
             });
 
         });
@@ -29,10 +29,10 @@ define(['scheduler'], function (SCHEDULER) {
                 s.init({
                     session: 'alpha'
                 });
-                expect(s.CONFIG.elevators[0].session).toEqual('alpha');
-                expect(s.CONFIG.elevators[1].session).toEqual('alpha');
-                expect(s.CONFIG.elevators[2].session).toEqual('alpha');
-                expect(s.CONFIG.elevators[3].session).toEqual('alpha');
+                expect(s.C.elevators[0].session).toEqual('alpha');
+                expect(s.C.elevators[1].session).toEqual('alpha');
+                expect(s.C.elevators[2].session).toEqual('alpha');
+                expect(s.C.elevators[3].session).toEqual('alpha');
             });
 
         });
@@ -52,15 +52,15 @@ define(['scheduler'], function (SCHEDULER) {
                     session: 'alpha'
                 });
                 s.update_time();
-                expect(s.CONFIG.log["t" + 1]).not.toBeUndefined();
-                expect(s.CONFIG.log["t" + 1]['A']).not.toBeUndefined();
-                expect(s.CONFIG.log["t" + 1]['B']).not.toBeUndefined();
-                expect(s.CONFIG.log["t" + 1]['C']).not.toBeUndefined();
-                expect(s.CONFIG.log["t" + 1]['D']).not.toBeUndefined();
-                expect(s.CONFIG.log["t" + 1]['A'].floor).toEqual(1);
-                expect(s.CONFIG.log["t" + 1]['B'].floor).toEqual(1);
-                expect(s.CONFIG.log["t" + 1]['C'].floor).toEqual(1);
-                expect(s.CONFIG.log["t" + 1]['D'].floor).toEqual(1);
+                expect(s.C.log["t" + 1]).not.toBeUndefined();
+                expect(s.C.log["t" + 1]['A']).not.toBeUndefined();
+                expect(s.C.log["t" + 1]['B']).not.toBeUndefined();
+                expect(s.C.log["t" + 1]['C']).not.toBeUndefined();
+                expect(s.C.log["t" + 1]['D']).not.toBeUndefined();
+                expect(s.C.log["t" + 1]['A'].floor).toEqual(1);
+                expect(s.C.log["t" + 1]['B'].floor).toEqual(1);
+                expect(s.C.log["t" + 1]['C'].floor).toEqual(1);
+                expect(s.C.log["t" + 1]['D'].floor).toEqual(1);
             });
 
         });

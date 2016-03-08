@@ -27,7 +27,6 @@ define(['jquery', 'elevator', 'dbconnector'], function ($, ELEVATOR, DBCONNECTOR
         this.C = $.extend(true, {}, this.C, config);
         for (i = 0; i < Object.keys(this.C.elevators).length; i += 1) {
             this.C.elevators[Object.keys(this.C.elevators)[i]].session = config.session;
-            console.log(this.C.elevators[Object.keys(this.C.elevators)[i]].session);
         }
         this.C.DBCONNECTOR = new DBCONNECTOR();
     };

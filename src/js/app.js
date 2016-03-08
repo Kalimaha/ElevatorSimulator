@@ -102,7 +102,7 @@ define(['jquery',
     };
 
     APP.prototype.show_history = function (elevator_id) {
-        this.C.DBCONNECTOR.get_by_session_and_id('test', this.C.session, elevator_id).then(function (response) {
+        this.C.DBCONNECTOR.get_by_session_and_id('production', this.C.session, elevator_id).then(function (response) {
             var s = '', i;
             for (i = 0; i < response.length; i += 1) {
                 s += '<tr><td>' + response[i].session + '</td><td>' + response[i].time + '</td><td>' + response[i].floor + '</td><td>' + response[i].direction + '</td></tr>';
@@ -178,7 +178,7 @@ define(['jquery',
             /* Persist the elevator. */
             this.C.SCHEDULER.C.elevators[elevator_id].id = elevator_id;
             this.C.SCHEDULER.C.elevators[elevator_id].time = this.C.time;
-            this.C.DBCONNECTOR.create('test', this.C.SCHEDULER.C.elevators[elevator_id]).then(function (response) {
+            this.C.DBCONNECTOR.create('production', this.C.SCHEDULER.C.elevators[elevator_id]).then(function (response) {
                 /* stored correctly */
             });
 
