@@ -35,13 +35,11 @@ define(['dbconnector', 'q'], function (DBCONNECTOR, Q) {
                 }).toThrowError('Please provide a valid environment ("test" or "production").');
             });
 
-            //it('The connector should retrieve data from the DB.', function () {
-            //    c.get_by_session_and_time('test', 'alpha', 1).success(function (response) {
-            //        console.log(response);
-            //    }).fail(function (error) {
-            //        console.log(error);
-            //    });
-            //});
+            it('The connector should retrieve data from the DB.', function () {
+                c.get_by_session_and_id('test', 'alpha', 'A').success(function (response) {
+                    expect(response).not.toBeUndefined();
+                });
+            });
 
         });
 
@@ -57,13 +55,11 @@ define(['dbconnector', 'q'], function (DBCONNECTOR, Q) {
                 "stops": []
             };
 
-            //it('The elevator should be stored in the DB.', function () {
-            //    c.create('test', elevator_1).success(function (response) {
-            //        console.log(response);
-            //    }).fail(function (error) {
-            //        console.log(error);
-            //    });
-            //});
+            it('The elevator should be stored in the DB.', function () {
+                c.create('test', elevator_1).success(function (response) {
+                    expect(response).not.toBeUndefined();
+                });
+            });
 
         });
 
