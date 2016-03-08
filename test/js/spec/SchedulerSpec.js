@@ -43,7 +43,7 @@ define(['scheduler'], function (SCHEDULER) {
                 s.init({
                     session: 'alpha'
                 });
-                s.update_time();
+                s.update_time(1);
                 expect(s.CONFIG.current_time).toEqual(1);
             });
 
