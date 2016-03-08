@@ -69,7 +69,7 @@ define(['scheduler'], function (SCHEDULER) {
 
             describe('When origin floor is lower than destination floor.', function () {
 
-                it('There is a route in 5 steps.', function () {
+                it('There is a route in 5 steps, from 1 to 5.', function () {
                     s.init({
                         session: 'alpha'
                     });
@@ -77,9 +77,34 @@ define(['scheduler'], function (SCHEDULER) {
                     expect(s.C.log.t1.A).not.toBeUndefined();
                     expect(s.C.log.t1.A.floor).toEqual(1);
                     expect(s.C.log.t2.A).not.toBeUndefined();
+                    expect(s.C.log.t2.A.floor).toEqual(2);
                     expect(s.C.log.t3.A).not.toBeUndefined();
+                    expect(s.C.log.t3.A.floor).toEqual(3);
                     expect(s.C.log.t4.A).not.toBeUndefined();
+                    expect(s.C.log.t4.A.floor).toEqual(4);
                     expect(s.C.log.t5.A).not.toBeUndefined();
+                    expect(s.C.log.t5.A.floor).toEqual(5);
+                });
+
+            });
+
+            describe('When origin floor is higher than destination floor.', function () {
+
+                it('There is a route in 5 steps, from 5 to 1.', function () {
+                    s.init({
+                        session: 'alpha'
+                    });
+                    s.route('A', 5, 1, 0);
+                    expect(s.C.log.t1.A).not.toBeUndefined();
+                    expect(s.C.log.t1.A.floor).toEqual(5);
+                    expect(s.C.log.t2.A).not.toBeUndefined();
+                    expect(s.C.log.t2.A.floor).toEqual(4);
+                    expect(s.C.log.t3.A).not.toBeUndefined();
+                    expect(s.C.log.t3.A.floor).toEqual(3);
+                    expect(s.C.log.t4.A).not.toBeUndefined();
+                    expect(s.C.log.t4.A.floor).toEqual(2);
+                    expect(s.C.log.t5.A).not.toBeUndefined();
+                    expect(s.C.log.t5.A.floor).toEqual(1);
                 });
 
             });
