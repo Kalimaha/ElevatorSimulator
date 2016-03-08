@@ -35,7 +35,7 @@ The front-end has been developed in JavaScript with the [RequireJS](http://requi
 
 The client contains a timer (_that can be started and paused by the user_). At each iteration of the clock the system refresh the status of the elevators. When an elevator is requested, the application determines the closest elevator and changes che global schedule accordingly.
 
-The history of each elevator is stored in the remote database and it can be recolled by the corresponding _History_ button available in the interface.
+The history of each elevator is stored in the remote database and it can be recalled by the corresponding _History_ button available in the interface.
 
 ### Source Code
 Source code is available on GitHub at [this link](https://github.com/Kalimaha/ElevatorSimulator).
