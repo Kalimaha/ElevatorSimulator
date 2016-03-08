@@ -14,11 +14,11 @@ define(['scheduler'], function (SCHEDULER) {
         describe('Configurability', function () {
 
             it('The simulator should start at t = 0', function () {
-                expect(s.C.time).toEqual(0);
+                expect(s.C.current_time).toEqual(0);
             });
 
             it('The simulator should have 4 initial elevators', function () {
-                expect(s.C.elevators.length).toEqual(4);
+                expect(Object.keys(s.C.elevators).length).toEqual(4);
             });
 
         });
@@ -29,10 +29,10 @@ define(['scheduler'], function (SCHEDULER) {
                 s.init({
                     session: 'alpha'
                 });
-                expect(s.C.elevators[0].session).toEqual('alpha');
-                expect(s.C.elevators[1].session).toEqual('alpha');
-                expect(s.C.elevators[2].session).toEqual('alpha');
-                expect(s.C.elevators[3].session).toEqual('alpha');
+                expect(s.C.elevators[Object.keys(s.C.elevators)[0]].session).toEqual('alpha');
+                expect(s.C.elevators[Object.keys(s.C.elevators)[1]].session).toEqual('alpha');
+                expect(s.C.elevators[Object.keys(s.C.elevators)[2]].session).toEqual('alpha');
+                expect(s.C.elevators[Object.keys(s.C.elevators)[3]].session).toEqual('alpha');
             });
 
         });
@@ -44,14 +44,14 @@ define(['scheduler'], function (SCHEDULER) {
                     session: 'alpha'
                 });
                 s.update_time();
-                expect(s.CONFIG.time).toEqual(1);
+                expect(s.CONFIG.current_time).toEqual(1);
             });
 
             it('When the time is updated there should be 4 elements in the log.', function () {
                 s.init({
                     session: 'alpha'
                 });
-                s.update_time();
+                s.update_time(1);
                 expect(s.C.log["t" + 1]).not.toBeUndefined();
                 expect(s.C.log["t" + 1]['A']).not.toBeUndefined();
                 expect(s.C.log["t" + 1]['B']).not.toBeUndefined();
