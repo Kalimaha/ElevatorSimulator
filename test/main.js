@@ -10,7 +10,9 @@ require.config({
         'scheduler': ['../src/js/core/scheduler'],
         'db-connector': ['../src/js/persistence/db_connector'],
         'simulator-spec': ['../test/js/spec/SchedulerSpec'],
-        'db-connector-spec': ['../test/js/spec/DBConnectorSpec']
+        'db-connector-spec': ['../test/js/spec/DBConnectorSpec'],
+        'person': ['../src/js/models/person'],
+        'elevator': ['../src/js/models/elevator']
     },
     shim: {
         'jasmine-html': {

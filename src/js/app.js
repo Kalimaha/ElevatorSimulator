@@ -14,7 +14,7 @@ define(['jquery',
         this.C = {
             placeholder_id: 'placeholder',
             running: false,
-            delay: 2000,
+            delay: 1000,
             time: 0,
             timer: null,
             session: null,
