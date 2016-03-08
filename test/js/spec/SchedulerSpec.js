@@ -44,7 +44,7 @@ define(['scheduler'], function (SCHEDULER) {
                     session: 'alpha'
                 });
                 s.update_time(1);
-                expect(s.CONFIG.current_time).toEqual(1);
+                expect(s.C.current_time).toEqual(1);
             });
 
             it('When the time is updated there should be 4 elements in the log.', function () {
