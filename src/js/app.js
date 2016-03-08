@@ -39,6 +39,8 @@ define(['jquery',
             i,
             that = this;
 
+        $('#' + this.C.placeholder_id).html('asd');
+
         /* Extend the default configuration with user's  settings. */
         this.C = $.extend(true, {}, this.C, config);
 

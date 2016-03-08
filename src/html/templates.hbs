@@ -141,14 +141,19 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-4">
                 <button class="btn btn-success" style="width: 100%;" id="start_button">
                     <i class="fa fa-play"></i> Start Simulation
                 </button>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-4">
                 <button class="btn btn-warning" style="width: 100%;" id="pause_button">
                     <i class="fa fa-pause"></i> Pause Simulation
+                </button>
+            </div>
+            <div class="col-xs-4">
+                <button class="btn btn-danger" style="width: 100%;"  id="reset_button">
+                    <i class="fa fa-close"></i> Reset Simulation
                 </button>
             </div>
         </div>
@@ -161,7 +166,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">History</h4>
                 </div>
-                <div class="modal-body" style="height: 200px; overflow-y: auto;">
+                <div class="modal-body">
                     <table class="table table-bordered table-responsive table-striped table-hover table-condensed">
                         <thead>
                             <tr>

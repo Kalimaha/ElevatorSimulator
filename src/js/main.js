@@ -19,11 +19,13 @@ require.config({
 
 });
 
-require(['app'], function (APP) {
+require(['app', 'domReady'], function (APP, domReady) {
 
     'use strict';
 
-    var app = new APP();
-    app.init();
+    domReady(function () {
+        var app = new APP();
+        app.init();
+    });
 
 });
